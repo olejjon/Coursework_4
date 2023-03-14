@@ -30,3 +30,7 @@ class BaseDAO(Generic[T]):
             except NotFound:
                 return []
         return stmt.all()
+
+    @property
+    def db_session(self):
+        return self._db_session

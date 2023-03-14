@@ -11,7 +11,7 @@ class BaseConfig:
     JSON_AS_ASCII = False
 
     ITEMS_PER_PAGE = 12
-
+    SQLALCHEMY_DATABASE_URI = "sqlite:///:memory:"
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     TOKEN_EXPIRE_MINUTES = 15
@@ -42,7 +42,7 @@ class ProductionConfig(BaseConfig):
 
 
 class ConfigFactory:
-    flask_env = os.getenv('FLASK_ENV')
+    flask_env = 'development'
 
     @classmethod
     def get_config(cls) -> Type[BaseConfig]:
@@ -52,6 +52,8 @@ class ConfigFactory:
             return ProductionConfig
         elif cls.flask_env == 'testing':
             return TestingConfig
+        elif cls.flask_env == 'base':
+            return BaseConfig
         raise NotImplementedError
 
 
